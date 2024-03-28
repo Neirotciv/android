@@ -1,0 +1,43 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/purple_500">
+
+    <TextView
+        android:id="@+id/errorTextView"
+        android:layout_width="384dp"
+        android:layout_height="39dp"
+        android:layout_above="@id/demandMessage"
+        android:layout_centerHorizontal="true"
+        android:background="@color/white"
+        android:padding="8dp"
+        android:text="@string/required_field"
+        android:textColor="#FB0101"
+        android:textSize="14sp"
+        android:visibility="gone" />
+
+    <EditText
+        android:id="@+id/demandMessage"
+        android:layout_width="384dp"
+        android:layout_height="371dp"
+        android:layout_centerInParent="true"
+        android:background="@color/white"
+        android:gravity="top"
+        android:layout_marginTop="10dp"
+        android:hint="@string/message"
+        android:inputType="textMultiLine"
+        android:maxLines="10"
+        android:minLines="5" />
+
+    <Button
+        android:id="@+id/validateButton"
+        android:layout_width="139dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/demandMessage"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/button"
+        android:text="@string/send"
+        android:textColor="@color/white" />
+
+</RelativeLayout>
