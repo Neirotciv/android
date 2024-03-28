@@ -19,6 +19,8 @@ import com.example.fetchai.ui.theme.FetchAITheme
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import org.json.JSONObject
 import java.io.BufferedReader
 import java.io.DataOutputStream
 import java.io.InputStreamReader
@@ -38,7 +40,14 @@ class MainActivity : ComponentActivity() {
         validateButton.setOnClickListener {
             val message = demandMessage.text.toString()
             if(!isEmptyEditText(demandMessage)) {
-                makeHttpRequest(message)
+                GlobalScope.launch {
+                    val content = makeHttpRequest(message)
+                    if (content != null) {
+                        println("Content : $content")
+                    } else {
+                        println("Error when fetching API.")
+                    }
+                }
             }
         }
     }
@@ -54,8 +63,8 @@ class MainActivity : ComponentActivity() {
         return false
     }
 
-    private fun makeHttpRequest(text: String) {
-        GlobalScope.launch(Dispatchers.IO) {
+    suspend fun makeHttpRequest(text: String): String? {
+        return withContext(Dispatchers.IO) {
             try {
                 val urlString = "https://curated.aleph.cloud/vm/a8b6d895cfe757d4bc5db9ba30675b5031fe3189a99a14f13d5210c473220caf/completion"
                 val url = URL(urlString)
@@ -81,14 +90,16 @@ class MainActivity : ComponentActivity() {
                     }
                     reader.close()
 
-                    println("Réponse : ${response.toString()}")
+                    val jsonResponse = JSONObject(response.toString())
+                    return@withContext jsonResponse.optString("content")
                 } else {
-                    println("Erreur de requête : $responseCode")
+                    println("Request error : $responseCode")
                 }
             } catch (e: Exception) {
-                println("Une exception s'est produite : ${e.message}")
+                println("Exception : ${e.message}")
                 e.printStackTrace()
             }
+            return@withContext null
         }
     }
 }
