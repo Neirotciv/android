@@ -47,6 +47,26 @@ android {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
+
+    signingConfigs {
+        create("release") {
+            keyAlias = System.getenv("KEY_ALIAS") ?: "defaultAlias"
+            keyPassword = System.getenv("KEY_PASSWORD") ?: "defaultKeyPassword"
+            storeFile = file("./default.jks")
+            storePassword = System.getenv("STORE_PASSWORD") ?: "defaultStorePassword"
+        }
+    }
+
+    buildTypes {
+        getByName("release") {
+            isMinifyEnabled = false
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
+            signingConfig = signingConfigs.getByName("release")
+        }
+    }
 }
 
 dependencies {
