@@ -1,0 +1,8 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/navigation_home"
+        android:title="Prompt" />
+    <item
+        android:id="@+id/navigation_dashboard"
+        android:title="Response" />
+</menu>
