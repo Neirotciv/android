@@ -37,6 +37,9 @@ jobs:
       - name: Run gradle tests
         run: ./gradlew test
 
+      - name: display the list of env variables
+        run: env
+
       - name: Build gradle project
         run: ./gradlew build
 
