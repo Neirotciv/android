@@ -43,9 +43,6 @@ jobs:
       - name: Build apk release project (APK) - ${{ env.main_project_module }} module
         run: ./gradlew assemble
 
-      - name: Build app bundle release (AAB) - ${{ env.main_project_module }} module
-        run: ./gradlew ${{ env.main_project_module }}:bundleRelease
-
       - name: Create GitHub Release
         id: create_release
         uses: actions/create-release@v1
@@ -77,15 +74,4 @@ jobs:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: ./path/to/your/release.apk
           asset_name: Release-${{ env.date_today }}.apk
-          asset_content_type: application/vnd.android.package-archive
-
-      # Upload Bundle (AAB)
-      - name: Upload Bundle (AAB) to Release
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./path/to/your/bundle.aab
-          asset_name: Bundle-${{ env.date_today }}.aab
           asset_content_type: application/vnd.android.package-archive
