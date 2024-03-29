@@ -64,7 +64,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./path/to/your/debug.apk
+          asset_path: ./app/debug/debug.apk
           asset_name: Debug-${{ env.date_today }}.apk
           asset_content_type: application/vnd.android.package-archive
 
@@ -75,6 +75,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./path/to/your/release.apk
+          asset_path: ./app/release/app-release.apk
           asset_name: Release-${{ env.date_today }}.apk
           asset_content_type: application/vnd.android.package-archive
