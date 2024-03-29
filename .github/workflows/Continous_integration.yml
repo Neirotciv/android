@@ -50,7 +50,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN }}
         with:
           tag_name: ${{ env.date_today }}
-          release_name: CI Build
+          release_name: CI Build ${{ env.date_today }}
           draft: false
           prerelease: false
 
