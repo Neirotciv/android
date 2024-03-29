@@ -5,30 +5,40 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".LibertAiResponse">
+    tools:context=".LibertAiResponseActivity">
 
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <RelativeLayout
         android:id="@+id/layout2"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="#673AB7">
 
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+        <TextView
+            android:id="@+id/response"
+            android:layout_width="389dp"
+            android:layout_height="467dp"
+            android:layout_centerInParent="true"
+            android:background="#FFFFFF"
+            android:editable="false"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            android:padding="16dp"
+            android:scrollbars="vertical"
+            android:text=""
+            android:textSize="16sp" />
 
-            <TextView
-                android:id="@+id/textView"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text=""
-                android:padding="16dp"
-                android:textSize="16sp"
-                android:scrollbars="vertical"
-                android:editable="false"
-                android:focusable="false"
-                android:focusableInTouchMode="false" />
-
-        </ScrollView>
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="96dp"
+            android:layout_height="100dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginStart="159dp"
+            android:layout_marginTop="14dp"
+            android:layout_marginEnd="156dp"
+            android:src="@mipmap/ic_launcher" />
 
     </RelativeLayout>
 

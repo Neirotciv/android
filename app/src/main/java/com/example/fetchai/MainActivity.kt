@@ -1,21 +1,17 @@
 package com.example.fetchai
 
-import android.content.Context
+
+import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageView
+import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import com.example.fetchai.ui.theme.FetchAITheme
+import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -24,28 +20,35 @@ import org.json.JSONObject
 import java.io.BufferedReader
 import java.io.DataOutputStream
 import java.io.InputStreamReader
-import java.io.OutputStreamWriter
-import java.lang.reflect.Field
 import java.net.HttpURLConnection
 import java.net.URL
 
 class MainActivity : ComponentActivity() {
+    @OptIn(DelicateCoroutinesApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         val demandMessage = findViewById<EditText>(R.id.demandMessage)
         val validateButton = findViewById<Button>(R.id.validateButton)
+        val progressBar = findViewById<ProgressBar>(R.id.progressBar)
+        val appIcon = findViewById<ImageView>(R.id.appIcon)
+        val message = demandMessage.text.toString()
 
         validateButton.setOnClickListener {
-            val message = demandMessage.text.toString()
             if(!isEmptyEditText(demandMessage)) {
+                progressBar.visibility = View.VISIBLE
+                appIcon.visibility = View.GONE
+
                 GlobalScope.launch {
                     val content = makeHttpRequest(message)
                     if (content != null) {
                         println("Content : $content")
+                        val intent = Intent(this@MainActivity, LibertAiResponseActivity::class.java)
+                        intent.putExtra("content", content)
+                        startActivity(intent)
                     } else {
-                        println("Error when fetching API.")
+                        println("Error while fetching API.")
                     }
                 }
             }
@@ -57,6 +60,7 @@ class MainActivity : ComponentActivity() {
 
         if (demandMessage.text.toString().isEmpty()) {
             errorText.visibility = TextView.VISIBLE
+            Toast.makeText(this, "Veuillez compléter le champ avant de valider", Toast.LENGTH_SHORT).show()
             return true
         }
         errorText.visibility = TextView.GONE
